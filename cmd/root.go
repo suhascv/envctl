@@ -14,7 +14,7 @@ var rootCmd = &cobra.Command{
     designed to integrate with your app commands locally and in CI`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Do Stuff Here
-		fmt.Println("hello")
+		fmt.Println("hello", args)
 	},
 }
 

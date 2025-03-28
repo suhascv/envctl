@@ -1,3 +1,3 @@
-module github.com/suhascv/bet-practice
+module github.com/suhascv/envctl
 
 go 1.23.4

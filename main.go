@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/suhascv/envctl/cmd"
 )
 
 func main() {
-	fmt.Println("envctl init")
+	cmd.Execute()
 }

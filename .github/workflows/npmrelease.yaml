@@ -1,0 +1,67 @@
+name: Post Release Actions
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  post-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Get release version
+        id: get_version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Setup npm package
+        run: |
+          # Create a temporary directory for npm package
+          mkdir -p npm-package
+          cd npm-package
+          
+          # Initialize npm package
+          npm init -y
+          
+          # Install go-npm as a dependency
+          npm install go-npm --save
+          
+          # Update package.json with go-npm configuration
+          cat > package.json << EOF
+          {
+            "name": "envctl",
+            "version": "${{ steps.get_version.outputs.version }}",
+            "description": "Environment control CLI tool",
+            "main": "index.js",
+            "bin": {
+              "envctl": "./bin/envctl"
+            },
+            "scripts": {
+              "postinstall": "go-npm install",
+              "preuninstall": "go-npm uninstall"
+            },
+            "goBinary": {
+              "name": "envctl",
+              "path": "./bin",
+              "url": "https://github.com/suhascv/envctl/releases/download/v{{version}}/envctl_{{version}}_{{platform}}_{{arch}}.tar.gz"
+            },
+            "keywords": ["cli", "environment", "control"],
+            "author": "",
+            "license": "MIT"
+          }
+          EOF
+
+      - name: Publish to NPM
+        run: |
+          cd npm-package
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

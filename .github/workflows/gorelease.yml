@@ -1,8 +1,11 @@
 name: goreleaser
 
 on:
-  pull_request:
   push:
+    tags:
+      - 'v*'  # This will match any tag starting with 'v'
+    branches:
+      - main
 
 permissions:
   contents: write

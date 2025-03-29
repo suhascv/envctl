@@ -12,10 +12,6 @@ var rootCmd = &cobra.Command{
 	Long: `A Fast and Flexible tool to 
     create and manage env/stage configuration files in your typescript project
     designed to integrate with your app commands locally and in CI`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
-		fmt.Println("hello", args)
-	},
 }
 
 func Execute() {

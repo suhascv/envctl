@@ -53,6 +53,9 @@ jobs:
               "postinstall": "go-npm install",
               "preuninstall": "go-npm uninstall"
             },
+            "dependencies": {
+              "go-npm": "^0.1.9"
+            },
             "goBinary": {
               "name": "envctl",
               "path": "./bin",

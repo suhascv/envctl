@@ -1,0 +1,8 @@
+builds:
+  - main: main.go
+    id: "cli"
+    binary: cli
+    goos:
+      - linux
+      - darwin
+      - windows

@@ -37,7 +37,7 @@ jobs:
           # Update package.json with go-npm configuration
           cat > package.json << EOF
           {
-            "name": "envctl",
+            "name": "@seaweed749/envctl",
             "version": "${{ steps.get_version.outputs.version }}",
             "description": "Environment control CLI tool",
             "main": "index.js",
@@ -55,13 +55,16 @@ jobs:
             },
             "keywords": ["cli", "environment", "control"],
             "author": "",
-            "license": "MIT"
+            "license": "MIT",
+            "publishConfig": {
+              "access": "public"
+            }
           }
           EOF
 
       - name: Publish to NPM
         run: |
           cd npm-package
-          npm publish --access public
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

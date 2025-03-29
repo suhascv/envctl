@@ -34,6 +34,11 @@ jobs:
           # Install go-npm as a dependency
           npm install go-npm --save
           
+          # Create bin directory and placeholder file
+          mkdir -p bin
+          touch bin/envctl
+          chmod +x bin/envctl
+          
           # Update package.json with go-npm configuration
           cat > package.json << EOF
           {
